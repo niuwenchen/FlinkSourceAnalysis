@@ -79,7 +79,7 @@ public class ConfigOption<T> {
     }
 
 
-    public boolean hasDeprecateKeys(){
+    public boolean hasDeprecatedKeys() {
         return deprecatedKeys != EMPTY;
     }
 

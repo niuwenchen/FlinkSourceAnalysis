@@ -4,6 +4,7 @@ import com.jackniu.flink.api.common.ExecutionConfig;
 import com.jackniu.flink.streaming.api.TimeCharacteristic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JackNiu on 2019/6/6.
@@ -15,8 +16,11 @@ public abstract class StreamExecutionEnvironment {
     private static StreamExecutionEnvironmentFactory contextEnvironmentFactory;
     private static int defaultLocalParallelism;
     private final ExecutionConfig config = new ExecutionConfig();
-//    private final CheckpointConfig checkpointCfg = new CheckpointConfig();
-//
+    private final CheckpointConfig checkpointCfg = new CheckpointConfig();
+
+    protected final List<StreamTransformation<?>> transformations = new ArrayList<>();
+
+
 //
 //    public StreamExecutionEnvironment() {
 //        this.timeCharacteristic = DEFAULT_TIME_CHARACTERISTIC;
