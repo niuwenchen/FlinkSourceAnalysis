@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by JackNiu on 2019/6/20.
  */
-public class GenericTypeSerializerConfigSnapshot<T> extends TypeSerializerConfigSnapshot {
+public abstract class GenericTypeSerializerConfigSnapshot<T> extends TypeSerializerConfigSnapshot {
     private Class<T> typeClass;
 
     /** This empty nullary constructor is required for deserializing the configuration. */

@@ -1,6 +1,11 @@
 package com.jackniu.flink.api.common.typeinfo;
 
 import com.jackniu.flink.annotations.PublicEvolving;
+import com.jackniu.flink.api.common.ExecutionConfig;
+import com.jackniu.flink.api.common.functions.InvalidTypesException;
+import com.jackniu.flink.api.common.typeutils.TypeSerializer;
+import com.jackniu.flink.api.java.typeutils.TypeExtractor;
+import com.jackniu.flink.util.FlinkRuntimeException;
 
 import java.io.Serializable;
 import java.util.Collections;

@@ -1,15 +1,15 @@
-package com.jackniu.flink.api.common.functions;
+package com.jackniu.flink.api.java.typeutils;
 
 /**
- * Created by JackNiu on 2019/6/20.
+ * Created by JackNiu on 2019/6/24.
  */
-public class InvalidProgramException  extends RuntimeException{
-    private static final long serialVersionUID = 3119881934024032887L;
+public class TypeExtractionException extends Exception {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new exception with no message.
      */
-    public InvalidProgramException() {
+    public TypeExtractionException() {
         super();
     }
 
@@ -18,7 +18,7 @@ public class InvalidProgramException  extends RuntimeException{
      *
      * @param message The exception message.
      */
-    public InvalidProgramException(String message) {
+    public TypeExtractionException(String message) {
         super(message);
     }
 
@@ -26,9 +26,10 @@ public class InvalidProgramException  extends RuntimeException{
      * Creates a new exception with the given message and cause.
      *
      * @param message The exception message.
-     * @param e The exception cause.
+     * @param e cause
      */
-    public InvalidProgramException(String message, Throwable e) {
+    public TypeExtractionException(String message, Throwable e) {
         super(message, e);
     }
+
 }

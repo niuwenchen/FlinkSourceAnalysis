@@ -3,7 +3,7 @@ package com.jackniu.flink.api.common.functions;
 /**
  * Created by JackNiu on 2019/6/20.
  */
-public class InvalidTypesException extends InvalidProgramException {
+public class InvalidTypesException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
