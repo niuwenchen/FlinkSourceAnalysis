@@ -1,24 +1,27 @@
 package com.jackniu.flink.api.java.typeutils;
 
+import com.jackniu.flink.annotations.Internal;
 import com.jackniu.flink.annotations.PublicEvolving;
 import com.jackniu.flink.api.common.functions.*;
 import com.jackniu.flink.api.common.io.InputFormat;
-import com.jackniu.flink.api.common.typeinfo.TypeInfoFactory;
-import com.jackniu.flink.api.common.typeinfo.TypeInformation;
+import com.jackniu.flink.api.common.typeinfo.*;
 import com.jackniu.flink.api.common.typeutils.CompositeType;
 import com.jackniu.flink.api.java.functions.KeySelector;
 import com.jackniu.flink.api.java.tuple.Tuple;
 import com.jackniu.flink.api.java.tuple.Tuple0;
+import com.jackniu.flink.types.Row;
+import com.jackniu.flink.types.Value;
+import com.jackniu.flink.util.InstantiationUtil;
 import com.jackniu.flink.util.Preconditions;
+import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.*;
 import java.util.*;
 
-import static com.jackniu.flink.api.java.typeutils.TypeExtractionUtils.checkAndExtractLambda;
-import static com.jackniu.flink.api.java.typeutils.TypeExtractionUtils.isClassType;
-import static com.jackniu.flink.api.java.typeutils.TypeExtractionUtils.typeToClass;
+import static com.jackniu.flink.api.java.typeutils.TypeExtractionUtils.*;
+import static com.jackniu.flink.util.Preconditions.checkNotNull;
 
 /**
  * Created by JackNiu on 2019/6/20.
@@ -46,8 +49,8 @@ public class TypeExtractor {
     private static Map<Type, Class<? extends TypeInfoFactory>> registeredTypeInfoFactories = new HashMap<>();
 
     private static void registerFactory(Type t, Class<? extends TypeInfoFactory> factory) {
-        Preconditions.checkNotNull(t, "Type parameter must not be null.");
-        Preconditions.checkNotNull(factory, "Factory parameter must not be null.");
+        checkNotNull(t, "Type parameter must not be null.");
+        checkNotNull(factory, "Factory parameter must not be null.");
 
         if (!TypeInfoFactory.class.isAssignableFrom(factory)) {
             throw new IllegalArgumentException("Class is not a TypeInfoFactory.");
@@ -1323,7 +1326,7 @@ public class TypeExtractor {
         }
     }
 
-    private static void validateInputContainsExecutable(LambdaExecutable exec, TypeInformation<?> typeInfo) {
+    private static void validateInputContainsExecutable(TypeExtractionUtils.LambdaExecutable exec, TypeInformation<?> typeInfo) {
         List<Method> methods = getAllDeclaredMethods(typeInfo.getTypeClass());
         for (Method method : methods) {
             if (exec.executablesEquals(method)) {

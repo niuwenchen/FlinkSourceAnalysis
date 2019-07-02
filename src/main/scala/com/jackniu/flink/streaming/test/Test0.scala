@@ -5,7 +5,8 @@ package com.jackniu.flink.streaming.test
   */
 object Test0 {
   def main(args: Array[String]): Unit = {
-    val env = StreamingExecutionEnvironment
+//    val env = StreamingExecutionEnvironment
+    println("Test")
   }
 
 }

@@ -5,15 +5,14 @@ package com.jackniu.flink.api.common;
  */
 
 import com.esotericsoftware.kryo.Serializer;
+import com.jackniu.flink.annotations.Internal;
 import com.jackniu.flink.api.common.restartstrategy.RestartStrategies;
 import com.jackniu.flink.configuration.MetricOptions;
 import com.jackniu.flink.util.Preconditions;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
+
 import static com.jackniu.flink.util.Preconditions.checkArgument;
 
 /**
@@ -411,8 +410,106 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
         }
     }
 
+    /**
+     * Returns the registered POJO types.
+     */
+    public LinkedHashSet<Class<?>> getRegisteredPojoTypes() {
+        return registeredPojoTypes;
+    }
 
 
+    public boolean isAutoTypeRegistrationDisabled() {
+        return !autoTypeRegistrationEnabled;
+    }
+
+
+    public void disableAutoTypeRegistration() {
+        this.autoTypeRegistrationEnabled = false;
+    }
+
+    public boolean isUseSnapshotCompression() {
+        return useSnapshotCompression;
+    }
+
+    public void setUseSnapshotCompression(boolean useSnapshotCompression) {
+        this.useSnapshotCompression = useSnapshotCompression;
+    }
+
+    @Internal
+    public boolean isFailTaskOnCheckpointError() {
+        return failTaskOnCheckpointError;
+    }
+
+    /**
+     * This method is visible because of the way the configuration is currently forwarded from the checkpoint config to
+     * the task. This should not be called by the user, please use CheckpointConfig.setFailOnCheckpointingErrors(...)
+     * instead.
+     */
+    @Internal
+    public void setFailTaskOnCheckpointError(boolean failTaskOnCheckpointError) {
+        this.failTaskOnCheckpointError = failTaskOnCheckpointError;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ExecutionConfig) {
+            ExecutionConfig other = (ExecutionConfig) obj;
+
+            return other.canEqual(this) &&
+                    Objects.equals(executionMode, other.executionMode) &&
+                    useClosureCleaner == other.useClosureCleaner &&
+                    parallelism == other.parallelism &&
+                    ((restartStrategyConfiguration == null && other.restartStrategyConfiguration == null) ||
+                            (null != restartStrategyConfiguration && restartStrategyConfiguration.equals(other.restartStrategyConfiguration))) &&
+                    forceKryo == other.forceKryo &&
+                    disableGenericTypes == other.disableGenericTypes &&
+                    objectReuse == other.objectReuse &&
+                    autoTypeRegistrationEnabled == other.autoTypeRegistrationEnabled &&
+                    forceAvro == other.forceAvro &&
+                    Objects.equals(codeAnalysisMode, other.codeAnalysisMode) &&
+                    printProgressDuringExecution == other.printProgressDuringExecution &&
+                    Objects.equals(globalJobParameters, other.globalJobParameters) &&
+                    autoWatermarkInterval == other.autoWatermarkInterval &&
+                    registeredTypesWithKryoSerializerClasses.equals(other.registeredTypesWithKryoSerializerClasses) &&
+                    defaultKryoSerializerClasses.equals(other.defaultKryoSerializerClasses) &&
+                    registeredKryoTypes.equals(other.registeredKryoTypes) &&
+                    registeredPojoTypes.equals(other.registeredPojoTypes) &&
+                    taskCancellationIntervalMillis == other.taskCancellationIntervalMillis &&
+                    useSnapshotCompression == other.useSnapshotCompression;
+
+        } else {
+            return false;
+        }
+    }
+
+
+    public int hashCode() {
+        return Objects.hash(
+                executionMode,
+                useClosureCleaner,
+                parallelism,
+                restartStrategyConfiguration,
+                forceKryo,
+                disableGenericTypes,
+                objectReuse,
+                autoTypeRegistrationEnabled,
+                forceAvro,
+                codeAnalysisMode,
+                printProgressDuringExecution,
+                globalJobParameters,
+                autoWatermarkInterval,
+                registeredTypesWithKryoSerializerClasses,
+                defaultKryoSerializerClasses,
+                registeredKryoTypes,
+                registeredPojoTypes,
+                taskCancellationIntervalMillis,
+                useSnapshotCompression);
+    }
+
+    public boolean canEqual(Object obj) {
+        return obj instanceof ExecutionConfig;
+    }
 
 
 

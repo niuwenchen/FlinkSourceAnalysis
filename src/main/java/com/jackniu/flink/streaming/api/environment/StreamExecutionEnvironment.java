@@ -2,6 +2,7 @@ package com.jackniu.flink.streaming.api.environment;
 
 import com.jackniu.flink.api.common.ExecutionConfig;
 import com.jackniu.flink.streaming.api.TimeCharacteristic;
+import com.jackniu.flink.streaming.api.transformations.StreamTransformation;
 
 import java.util.ArrayList;
 import java.util.List;

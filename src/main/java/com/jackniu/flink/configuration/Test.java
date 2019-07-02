@@ -10,6 +10,6 @@ public class Test {
         System.out.println(name);
         System.out.println(name1);
         System.out.println(name.equals(name1));
-        System.out.println(name.);
+//        System.out.println(name.);
     }
 }
