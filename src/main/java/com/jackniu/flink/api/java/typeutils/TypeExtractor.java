@@ -52,6 +52,8 @@ public class TypeExtractor {
         checkNotNull(t, "Type parameter must not be null.");
         checkNotNull(factory, "Factory parameter must not be null.");
 
+        //isAssignableFrom()方法是从类继承的角度去判断，instanceof关键字是从实例继承的角度去判断。
+//        isAssignableFrom()方法是判断是否为某个类的父类，instanceof关键字是判断是否某个类的子类。
         if (!TypeInfoFactory.class.isAssignableFrom(factory)) {
             throw new IllegalArgumentException("Class is not a TypeInfoFactory.");
         }

@@ -21,6 +21,18 @@ public abstract class StreamExecutionEnvironment {
 
     protected final List<StreamTransformation<?>> transformations = new ArrayList<>();
 
+    private long bufferTimeout = DEFAULT_NETWORK_BUFFER_TIMEOUT;
+
+    protected boolean isChainingEnabled = true;
+
+    /** The state backend used for storing k/v state and state snapshots. */
+    private StateBackend defaultStateBackend;
+
+    /** The time characteristic used by the data streams. */
+    private TimeCharacteristic timeCharacteristic = DEFAULT_TIME_CHARACTERISTIC;
+
+    protected final List<Tuple2<String, DistributedCache.DistributedCacheEntry>> cacheFile = new ArrayList<>();
+
 
 //
 //    public StreamExecutionEnvironment() {
